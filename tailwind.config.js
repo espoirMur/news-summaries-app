@@ -5,8 +5,15 @@
 
 export default {
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-    theme: {
-        extend: {},
+    daisyui: {
+        themes: ["light", "dark"],
     },
-    plugins: [],
+    theme: {
+        extend: {
+            fontFamily: {
+                montserrat: ["Montserrat", "sans-serif"],
+            },
+        },
+    },
+    plugins: [require("daisyui")],
 };
