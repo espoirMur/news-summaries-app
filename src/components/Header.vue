@@ -13,13 +13,14 @@ const toggleTheme = () => {
 };
 onMounted(() => {
     const savedTheme = localStorage.getItem("theme");
+    let theme;
     if (savedTheme) {
-        isDarkMode.value = savedTheme === "dark";
+        theme = savedTheme;
     } else {
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        isDarkMode.value = prefersDark;
+        theme = prefersDark ? "dark" : "light";
     }
-    const theme = isDarkMode.value ? "dark" : "light";
+    isDarkMode.value = theme === "dark";
     document.documentElement.setAttribute("data-theme", theme);
 });
 </script>
