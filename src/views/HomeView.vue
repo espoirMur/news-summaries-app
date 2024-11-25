@@ -1,17 +1,32 @@
 <script setup>
+import { fetchNews } from '@/api/fetcher';
 import Header from '@/components/Header.vue';
 import Hero from '@/components/Hero.vue';
 import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
+import { ref, computed } from 'vue';
 
-const fetcher = async () => {
-  const data = await fetch(`https://news-proxy.netlify.app/api/top-headlines?pageSize=12&page=1&apiKey=dc6c52bcb7734ed59ed9898541938a6d&language=en`).then((res) => res.json());
-  return data?.articles?.filter(article => article.source.id !== null);
-}
+const currentPage = ref(1);
+const itemsPerPage = 5;
+
 const { data, isLoading } = useQuery({
   queryKey: ["news"],
-  queryFn: () => fetcher()
+  queryFn: () => fetchNews()
 })
+
+const paginatedData = computed(() => {
+  if (!data?.value) return [];
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return data.value.slice(start, end);
+});
+
+const totalPages = computed(() => Math.ceil((data?.value?.length || 0) / itemsPerPage));
+const goToPage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
 
 </script>
 
@@ -21,21 +36,25 @@ const { data, isLoading } = useQuery({
     <span class="loading loading-spinner loading-md"></span>
   </div>
   <main v-else-if="data" class="max-w-7xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8">
-    <Hero :title="data[0]?.title" :description="data[0]?.description" :img-url="data[0]?.urlToImage"
-      :href="data[0]?.url" />
-    <div class="flex justify-normal lg:justify-end">
-      <select className="select select-bordered w-full max-w-xs">
-        <option disabled selected>Filter articles</option>
-        <option>Tous</option>
-        <option>Aujourdhui</option>
-        <option>Cette Semaine</option>
-        <option>Ce Moi</option>
-      </select>
+    <Hero :description="data[0]?.summary" :id="1" />
+    <div class="flex lg:justify-end justify-normal">
+      <div class="flex justify-center items-center gap-4 mt-6">
+        <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1"
+          class="px-6 py-1 text-xs font-medium rounded-lg bg-gray-200 text-gray-900 hover:bg-gray-500 hover:text-gray-200 disabled:bg-gray-100 disabled:cursor-not-allowed">
+          <span class="text-lg">&lsaquo;&lsaquo;</span> Previous
+        </button>
+        <span class="text-sm">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
+          class="px-6 py-1 text-xs font-medium rounded-lg bg-gray-200 text-gray-900 hover:bg-gray-500 hover:text-gray-200 disabled:bg-gray-100 disabled:cursor-not-allowed">
+          Next <span class="text-lg">&rsaquo;&rsaquo;</span>
+        </button>
+      </div>
     </div>
     <div class="flex flex-col gap-4">
-      <NewTile v-for="article in data" :key="article?.source?.id" :title="article.title"
-        :description="article.description" :published="article.publishedAt" :href="article.url" />
+      <NewTile v-for="(article, index) in paginatedData" :key="index + 1" :description="article.summary"
+        :published="article.publishedAt" :id="index + 1" />
     </div>
+
   </main>
   <footer class="w-full py-4 lg:py-6">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 font-montserrat flex justify-end ">
