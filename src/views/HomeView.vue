@@ -43,7 +43,7 @@ const goToPage = (page) => {
           class="px-6 py-1 text-xs font-medium rounded-lg bg-gray-200 text-gray-900 hover:bg-gray-500 hover:text-gray-200 disabled:bg-gray-100 disabled:cursor-not-allowed">
           <span class="text-lg">&lsaquo;&lsaquo;</span> Previous
         </button>
-        <span class="text-sm">Page {{ currentPage }} of {{ totalPages }}</span>
+        <span class="text-sm">Page {{ currentPage }} sur {{ totalPages }}</span>
         <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages"
           class="px-6 py-1 text-xs font-medium rounded-lg bg-gray-200 text-gray-900 hover:bg-gray-500 hover:text-gray-200 disabled:bg-gray-100 disabled:cursor-not-allowed">
           Next <span class="text-lg">&rsaquo;&rsaquo;</span>
