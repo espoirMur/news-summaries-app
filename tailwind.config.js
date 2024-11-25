@@ -5,7 +5,7 @@
 
 export default {
     content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-    darkMode: ["selector", '[data-mode="dark"]'],
+    darkMode: ["class"],
     daisyui: {
         themes: ["light", "dark"],
     },

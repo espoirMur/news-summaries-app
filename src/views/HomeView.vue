@@ -31,7 +31,7 @@ const goToPage = (page) => {
 </script>
 
 <template>
-  <Header />
+
   <div v-if="isLoading" class="min-h-svh w-full flex justify-center items-center">
     <span class="loading loading-spinner loading-md"></span>
   </div>
@@ -56,9 +56,5 @@ const goToPage = (page) => {
     </div>
 
   </main>
-  <footer class="w-full py-4 lg:py-6">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 font-montserrat flex justify-end ">
-      <span class="text-base font-normal"> &copy; 2024</span>
-    </div>
-  </footer>
+
 </template>
