@@ -3,10 +3,15 @@ import { fetchNews } from '@/api/fetcher';
 import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
 import VueDatePicker from '@vuepic/vue-datepicker';
+import { ref } from 'vue';
+
 const { data, isLoading } = useQuery({
   queryKey: ["news"],
   queryFn: () => fetchNews()
 })
+
+// State for the selected date
+const selectedDate = ref(null);
 
 </script>
 
@@ -18,7 +23,7 @@ const { data, isLoading } = useQuery({
     <div class="flex justify-end">
       <div>
         <label for="">Trier par date</label>
-        <VueDatePicker class="text-gray-500" v-model="date"></VueDatePicker>
+        <VueDatePicker class="text-gray-500" v-model="selectedDate"></VueDatePicker>
       </div>
     </div>
     <div class="flex flex-col gap-4">
