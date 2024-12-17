@@ -1,5 +1,5 @@
 <script setup>
-import { fetcher, fetchNews } from '@/api/fetcher';
+import { fetcher } from '@/api/fetcher';
 import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
 import VueDatePicker from '@vuepic/vue-datepicker';
