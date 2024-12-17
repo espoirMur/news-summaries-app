@@ -1,5 +1,5 @@
 <script setup>
-import { fetchNews } from '@/api/fetcher';
+import { fetcher, fetchNews } from '@/api/fetcher';
 import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
 import VueDatePicker from '@vuepic/vue-datepicker';
@@ -7,7 +7,7 @@ import { ref } from 'vue';
 
 const { data, isLoading } = useQuery({
   queryKey: ["news"],
-  queryFn: () => fetchNews()
+  queryFn: () => fetcher()
 })
 
 // State for the selected date
