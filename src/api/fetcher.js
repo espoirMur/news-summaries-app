@@ -17,7 +17,5 @@ export const fetcher = async () => {
     const data = await fetch(
         `https://congo-news-summaries.s3.us-west-004.backblazeb2.com/summaries/news-summaries-2024-12-10.json`
     ).then((res) => res.json());
-    https: return data?.articles?.filter(
-        (article) => article.source.id !== null
-    );
+    return data;
 };
