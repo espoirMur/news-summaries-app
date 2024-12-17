@@ -15,7 +15,9 @@ export const fetchOneNews = async (index = 0) => {
 
 export const fetcher = async () => {
     const data = await fetch(
-        `https://news-proxy.netlify.app/api/top-headlines?pageSize=12&page=1&apiKey=dc6c52bcb7734ed59ed9898541938a6d&language=en`
+        `https://congo-news-summaries.s3.us-west-004.backblazeb2.com/summaries/news-summaries-2024-12-10.json`
     ).then((res) => res.json());
-    return data?.articles?.filter((article) => article.source.id !== null);
+    https: return data?.articles?.filter(
+        (article) => article.source.id !== null
+    );
 };
