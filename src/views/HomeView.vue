@@ -4,11 +4,19 @@ import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import { ref } from 'vue';
+import { useNewsStore } from "@/stores/newsStore";
+
+const newsStore = useNewsStore();
 
 const { data, isLoading } = useQuery({
   queryKey: ["news"],
-  queryFn: () => fetcher()
+  queryFn: () => fetcher(),
+  // onSuccess: (fetchedData) => {
+  //   newsStore.setNews(fetchedData);
+  // },
 })
+
+
 
 // State for the selected date
 const selectedDate = ref(null);

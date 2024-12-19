@@ -1,13 +1,11 @@
 /** @format */
 
-import { news_sumaries } from "@/utils/constants";
+// export const fetchNews = async () => {
+//     await new Promise((resolve) => setTimeout(resolve, 1000));
+//     return news_sumaries;
+// };
 
-export const fetchNews = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return news_sumaries;
-};
-
-export const fetchOneNews = async (index = 0) => {
+export const fetchOneNews = async (index = 0, news_sumaries) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const singleNews = news_sumaries[index];
     return singleNews;
