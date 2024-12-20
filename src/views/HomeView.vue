@@ -3,24 +3,30 @@ import { fetcher } from '@/api/fetcher';
 import NewTile from '@/components/NewTile.vue';
 import { useQuery } from '@tanstack/vue-query';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import { ref } from 'vue';
-import { useNewsStore } from "@/stores/newsStore";
+import { ref, computed, watch } from 'vue';
 
-const newsStore = useNewsStore();
-
-const { data, isLoading } = useQuery({
-  queryKey: ["news"],
-  queryFn: () => fetcher(),
-  // onSuccess: (fetchedData) => {
-  //   newsStore.setNews(fetchedData);
-  // },
-})
-
-
-
-// State for the selected date
 const selectedDate = ref(null);
 
+// Format the selected date as "YYYY-MM-DD" or null if no date is selected
+const formattedDate = computed(() => {
+  if (!selectedDate.value) return null;
+  const year = selectedDate.value.getFullYear();
+  const month = String(selectedDate.value.getMonth() + 1).padStart(2, '0');
+  const day = String(selectedDate.value.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+});
+
+// Fetch data dynamically based on `formattedDate`
+const { data, isLoading, refetch } = useQuery({
+  queryKey: ['news', formattedDate],
+  queryFn: () => fetcher(formattedDate.value),
+  enabled: true, // Query will run automatically
+});
+
+// Watch for changes in `selectedDate` and refetch data
+watch(formattedDate, () => {
+  refetch();
+});
 </script>
 
 <template>
@@ -35,8 +41,8 @@ const selectedDate = ref(null);
       </div>
     </div>
     <div class="flex flex-col gap-4">
-      <NewTile v-for="(article, index) in data" :key="index + 1" :description="article.summary"
-        :published="article.publishedAt" :id="index + 1" />
+      <NewTile v-for="(article, index) in data" :key="index" :data="article" :description="article.summary"
+        :published="article.publishedAt" :id="index" />
     </div>
   </main>
 </template>
