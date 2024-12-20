@@ -9,7 +9,7 @@ const newsStore = useNewsStore();
 
 </script>
 <template>
-    <main class="max-w-7xl mx-auto px-6 lg:px-8 mt-8  min-h-[80svh] font-montserrat">
+    <main class="max-w-4xl mx-auto px-6 lg:px-8 mt-8  min-h-[80svh] font-montserrat">
         <div v-if="LoadingSummaries" class="w-full flex min-h-[50svh] justify-center items-center">
             <span class="loading loading-spinner loading-md"></span>
         </div>
