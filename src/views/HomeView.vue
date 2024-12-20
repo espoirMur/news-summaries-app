@@ -7,7 +7,6 @@ import { ref, computed, watch } from 'vue';
 
 const selectedDate = ref(null);
 
-// Format the selected date as "YYYY-MM-DD" or null if no date is selected
 const formattedDate = computed(() => {
   if (!selectedDate.value) return null;
   const year = selectedDate.value.getFullYear();
@@ -16,14 +15,12 @@ const formattedDate = computed(() => {
   return `${year}-${month}-${day}`;
 });
 
-// Fetch data dynamically based on `formattedDate`
 const { data, isLoading, refetch } = useQuery({
   queryKey: ['news', formattedDate],
   queryFn: () => fetcher(formattedDate.value),
   enabled: true, // Query will run automatically
 });
 
-// Watch for changes in `selectedDate` and refetch data
 watch(formattedDate, () => {
   refetch();
 });
@@ -33,7 +30,7 @@ watch(formattedDate, () => {
   <div v-if="isLoading" class="min-h-svh w-full mt-8 flex justify-center items-center">
     <span class="loading loading-spinner loading-md"></span>
   </div>
-  <main v-else-if="data" class="max-w-7xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8">
+  <main v-else-if="data" class="max-w-4xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8">
     <div class="flex justify-end">
       <div>
         <label for="">Trier par date</label>

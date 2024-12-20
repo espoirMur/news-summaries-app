@@ -27,7 +27,7 @@ onMounted(() => {
 
 <template>
     <header class="w-full">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between py-6 items-center">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 flex justify-between py-6 items-center">
             <h1 class="text-3xl font-extrabold">N.</h1>
             <div>
                 <label class="flex cursor-pointer gap-2 items-center">
