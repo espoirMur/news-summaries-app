@@ -1,5 +1,5 @@
 <script setup>
-import { fetcher } from "@/api/fetcher";
+import { getData } from "@/api/fetcher";
 import NewTile from "@/components/NewTile.vue";
 import { useQuery } from "@tanstack/vue-query";
 import VueDatePicker from "@vuepic/vue-datepicker";
@@ -17,7 +17,7 @@ const formattedDate = computed(() => {
 
 const { data, isLoading, refetch } = useQuery({
   queryKey: ["news", formattedDate],
-  queryFn: () => fetcher(formattedDate.value),
+  queryFn: () => getData(formattedDate.value),
   enabled: true, // Query will run automatically
 });
 
