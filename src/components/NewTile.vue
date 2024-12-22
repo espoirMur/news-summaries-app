@@ -33,7 +33,7 @@ const setDetailAndNavigate = () => {
         <div class="flex flex-col gap-4 lg:gap-5 items-start">
             <h3 class="text-xl lg:text-2xl font-extrabold">{{ title }}</h3>
             <p class="text-base leading-7">{{ description }}</p>
-            <RouterLink @click="setDetailAndNavigate" :to="`/info/` + id"
+            <RouterLink @click="setDetailAndNavigate" :to="`/info/` + parseInt(id + 1)"
                 class="text-sm font-semibold  hover:underline cursor-pointer duration-300">
                 En savoir plus
                 <span class="text-lg">&rsaquo;</span>
