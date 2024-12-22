@@ -24,37 +24,36 @@ const { data, isLoading, refetch } = useQuery({
 watch(formattedDate, () => {
   refetch();
 });
+const articlesWithTitles = computed(() => {
+  if (!data.value) return [];
+  return data.value.map((article) => {
+    // Check if the summary contains any title
+    const matchingTitle = article.titles.find((title) =>
+      article.summary.includes(title)
+    );
+    // Use the first title as a fallback
+    return {
+      ...article,
+      title: matchingTitle || article.titles[0],
+    };
+  });
+});
 </script>
 
 <template>
-  <div
-    v-if="isLoading"
-    class="min-h-svh w-full mt-8 flex justify-center items-center"
-  >
+  <div v-if="isLoading" class="min-h-svh w-full mt-8 flex justify-center items-center">
     <span class="loading loading-spinner loading-md"></span>
   </div>
-  <main
-    v-else-if="data"
-    class="max-w-5xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8"
-  >
+  <main v-else-if="data" class="max-w-5xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8">
     <div class="flex justify-end">
       <div>
         <label for="">Trier par date</label>
-        <VueDatePicker
-          class="text-gray-500"
-          v-model="selectedDate"
-        ></VueDatePicker>
+        <VueDatePicker class="text-gray-500" v-model="selectedDate"></VueDatePicker>
       </div>
     </div>
     <div class="flex flex-col gap-4">
-      <NewTile
-        v-for="(article, index) in data"
-        :key="index"
-        :data="article"
-        :description="article.summary"
-        :published="article.publishedAt"
-        :id="index"
-      />
+      <NewTile v-for="(article, index) in articlesWithTitles" :key="index" :data="article" :title="article.title"
+        :description="article.summary" :published="article.publishedAt" :id="index" />
     </div>
   </main>
 </template>
