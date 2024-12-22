@@ -25,35 +25,22 @@ watch(formattedDate, () => {
   refetch();
 });
 
-// const articlesWithTitles = computed(() => {
-//   if (!data.value) return [];
-//   return data.value.map((article) => {
-//     // Use regex to find a title containing "Titre" (case insensitive)
-//     const matchingTitle = article.titles.find((title) =>
-//       /titre/i.test(title)
-//     );
-//     return {
-//       ...article,
-//       title: matchingTitle || article.titles[0], // Fallback to first title
-//     };
-//   });
-// });
 const articlesWithTitles = computed(() => {
   if (!data.value) return [];
   return data.value.map((article) => {
-    // Extract title and updated summary from the article summary
+
     const summary = article.summary;
-    let title = article.titles[0]; // Fallback to the first title
+    let title = article.titles[0];
     let updatedSummary = summary;
 
     const titleMatch = summary.match(/Titre:\s*(.+?)\nRésumé:/s);
     const summaryMatch = summary.match(/Résumé:\s*(.+)/s);
 
     if (titleMatch) {
-      title = titleMatch[1].trim(); // Extract title between "Titre:" and "Résumé:"
+      title = titleMatch[1].trim();
     }
     if (summaryMatch) {
-      updatedSummary = summaryMatch[1].trim(); // Extract the content after "Résumé:"
+      updatedSummary = summaryMatch[1].trim();
     }
 
     return {
@@ -63,20 +50,7 @@ const articlesWithTitles = computed(() => {
     };
   });
 });
-// const articlesWithTitles = computed(() => {
-//   if (!data.value) return [];
-//   return data.value.map((article) => {
-//     // Check if the summary contains any title
-//     const matchingTitle = article.titles.find((title) =>
-//       article.summary.includes(title)
-//     );
-//     // Use the first title as a fallback
-//     return {
-//       ...article,
-//       title: matchingTitle || article.titles[0],
-//     };
-//   });
-// });
+
 </script>
 
 <template>
