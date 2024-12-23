@@ -51,7 +51,7 @@ const formattedNewsDetail = computed(() => {
                 </RouterLink>
             </div>
             <div class="flex flex-col gap-4 lg:gap-6 col-span-1 ">
-                <h3 class="text-2xl md:text-3xl font-bold">Titre: {{ formattedNewsDetail.title }}</h3>
+                <h3 class="text-2xl md:text-3xl font-bold">{{ formattedNewsDetail.title }}</h3>
                 <p class="text-sm md:text-base leading-6">{{ formattedNewsDetail.summary }}</p>
             </div>
             <div class="max-w-4xl flex flex-col gap-3">
