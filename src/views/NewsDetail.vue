@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { useNewsStore } from "@/stores/newsStore";
 import { computed, ref } from 'vue';
+import { extractTitleAndSummary } from '@/utils/funct';
 
 const LoadingSummaries = ref(false)
 
@@ -13,25 +14,12 @@ const formattedNewsDetail = computed(() => {
     if (!newsStore.news_detail) return null;
 
     const detail = newsStore.news_detail;
-    const summary = detail.summary;
-
-    let title = detail.titles[0]; // Fallback to the first title
-    let updatedSummary = summary;
-
-    const titleMatch = summary.match(/Titre:\s*(.+?)\nRésumé:/s);
-    const summaryMatch = summary.match(/Résumé:\s*(.+)/s);
-
-    if (titleMatch) {
-        title = titleMatch[1].trim(); // Extract title between "Titre:" and "Résumé:"
-    }
-    if (summaryMatch) {
-        updatedSummary = summaryMatch[1].trim(); // Extract content after "Résumé:"
-    }
+    const { title, summary } = extractTitleAndSummary(detail.summary);
 
     return {
         ...detail,
-        title,
-        summary: updatedSummary,
+        title: title || detail.titles[0], // Fallback to the first title
+        summary,
     };
 });
 
@@ -59,10 +47,10 @@ const formattedNewsDetail = computed(() => {
                 <h5 class="text-base md:text-lg font-bold">Sources:</h5>
                 <div>
                     <ul class="ml-4 flex flex-col gap-2">
-                        <li v-for="key in Object.keys(formattedNewsDetail.titles)" :key="key">
+                        <li v-for="(value, key) in formattedNewsDetail.urls" :key="key">
                             <span class="font-bold">- </span>
-                            <a :href="formattedNewsDetail.titles[key]" class="hover:underline font-medium"
-                                target="_blank" rel="noopener noreferrer">
+                            <a :href="value" class="hover:underline font-medium" target="_blank"
+                                rel="noopener noreferrer">
                                 {{ formattedNewsDetail.titles[key] }}
                             </a>
                         </li>

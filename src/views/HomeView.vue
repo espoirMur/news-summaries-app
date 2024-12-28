@@ -1,6 +1,7 @@
 <script setup>
 import { getData } from "@/api/fetcher";
 import NewTile from "@/components/NewTile.vue";
+import { extractTitleAndSummary } from "@/utils/funct";
 import { useQuery } from "@tanstack/vue-query";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { ref, computed, watch } from "vue";
@@ -28,20 +29,12 @@ watch(formattedDate, () => {
 const articlesWithTitles = computed(() => {
   if (!data.value) return [];
   return data.value.map((article) => {
-
     const summary = article.summary;
-    let title = article.titles[0];
-    let updatedSummary = summary;
+    const { title: extractedTitle, summary: extractedSummary } = extractTitleAndSummary(summary);
 
-    const titleMatch = summary.match(/Titre:\s*(.+?)\nRésumé:/s);
-    const summaryMatch = summary.match(/Résumé:\s*(.+)/s);
-
-    if (titleMatch) {
-      title = titleMatch[1].trim();
-    }
-    if (summaryMatch) {
-      updatedSummary = summaryMatch[1].trim();
-    }
+    // Fallback to the first title in the titles array if extractedTitle is empty
+    const title = extractedTitle || article.titles[0] || ""; // Ensure there's always a string
+    const updatedSummary = extractedSummary || summary; // Fallback to original summary if empty
 
     return {
       ...article,
@@ -50,6 +43,7 @@ const articlesWithTitles = computed(() => {
     };
   });
 });
+
 
 </script>
 
