@@ -8,8 +8,6 @@ const LoadingSummaries = ref(false)
 
 const newsStore = useNewsStore();
 
-console.log(newsStore.news_detail)
-
 const formattedNewsDetail = computed(() => {
     if (!newsStore.news_detail) return null;
 

@@ -11,7 +11,6 @@ export const useNewsStore = defineStore("news", {
     }),
     actions: {
         setNews(data) {
-            console.log(data, "from store");
             this.news = data;
             this.isLoading = false;
         },

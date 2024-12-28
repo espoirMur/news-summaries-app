@@ -1,7 +1,7 @@
 <script setup>
 import { getData } from "@/api/fetcher";
 import NewTile from "@/components/NewTile.vue";
-import { extractTitleAndSummary } from "@/utils/funct";
+import { extractTitleAndSummary, sortByLongestTitle } from "@/utils/funct";
 import { useQuery } from "@tanstack/vue-query";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { ref, computed, watch } from "vue";
@@ -30,14 +30,14 @@ watch(formattedDate, () => {
   refetch();
 });
 
-const articlesWithTitles = computed(() => {
+
+const sortedArticles = computed(() => {
   if (!data.value) return [];
-  return data.value.map((article) => {
-    const summary = article.summary;
+  const articlesWithTitles = data.value.map((article) => {
+    const summary = article.summary || "";
     const { title: extractedTitle, summary: extractedSummary } = extractTitleAndSummary(summary);
 
-    // Fallback to the first title in the titles array if extractedTitle is empty
-    const title = extractedTitle || article.titles[0] || ""; // Ensure there's always a string
+    const title = extractedTitle || article.titles?.[0] || "Untitled"; // Handle fallback for missing titles
     const updatedSummary = extractedSummary || summary; // Fallback to original summary if empty
 
     return {
@@ -46,7 +46,10 @@ const articlesWithTitles = computed(() => {
       summary: updatedSummary,
     };
   });
+
+  return sortByLongestTitle(articlesWithTitles);
 });
+
 
 const isDateDisabled = (date) => {
   return date < startDate || date > today;
@@ -79,7 +82,7 @@ const isDateDisabled = (date) => {
       </div>
     </div>
     <div class="flex flex-col gap-4">
-      <NewTile v-for="(article, index) in articlesWithTitles" :key="index" :data="data[index]" :title="article.title"
+      <NewTile v-for="(article, index) in sortedArticles" :key="index" :data="data[index]" :title="article.title"
         :description="article.summary" :published="article.publishedAt" :id="index" />
     </div>
   </main>
