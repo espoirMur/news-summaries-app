@@ -8,6 +8,7 @@ const LoadingSummaries = ref(false)
 
 const newsStore = useNewsStore();
 
+
 const formattedNewsDetail = computed(() => {
     if (!newsStore.news_detail) return null;
 
@@ -16,10 +17,12 @@ const formattedNewsDetail = computed(() => {
 
     return {
         ...detail,
-        title: title || detail.titles[0], // Fallback to the first title
+        title: title || detail.titles[0],
         summary,
     };
 });
+
+newsStore.loadNewsDetailFromStorage();
 
 </script>
 <template>

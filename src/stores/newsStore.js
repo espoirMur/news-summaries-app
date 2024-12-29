@@ -7,7 +7,7 @@ export const useNewsStore = defineStore("news", {
     state: () => ({
         news: news_sumaries, // To store the fetched news data
         isLoading: true, // To track loading state
-        news_detail: JSON.parse(localStorage.getItem("news_detail")) || null, // Initialize from localStorage
+        news_detail: null, // Initialize from localStorage
     }),
     actions: {
         setNews(data) {
@@ -15,7 +15,7 @@ export const useNewsStore = defineStore("news", {
             this.isLoading = false;
         },
         setNewsDetail(detail) {
-            this.news_detail = detail;
+            this.news_detail = { ...detail };
             localStorage.setItem("news_detail", JSON.stringify(detail)); // Persist to localStorage
         },
         loadNewsDetailFromStorage() {

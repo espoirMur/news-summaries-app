@@ -82,7 +82,7 @@ const isDateDisabled = (date) => {
       </div>
     </div>
     <div class="flex flex-col gap-4">
-      <NewTile v-for="(article, index) in sortedArticles" :key="index" :data="data[index]" :title="article.title"
+      <NewTile v-for="(article, index) in sortedArticles" :key="index" :data="article" :title="article.title"
         :description="article.summary" :published="article.publishedAt" :id="index" />
     </div>
   </main>
