@@ -1,7 +1,7 @@
 <script setup>
 import { getData } from "@/api/fetcher";
 import NewTile from "@/components/NewTile.vue";
-import { extractTitleAndSummary, sortByLongestTitle } from "@/utils/funct";
+import { extractTitleAndSummary, formatDateTimeToFrench, sortByLongestTitle } from "@/utils/funct";
 import { useQuery } from "@tanstack/vue-query";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { ref, computed, watch } from "vue";
@@ -64,7 +64,7 @@ const isDateDisabled = (date) => {
   <main v-else-if="data" class="max-w-5xl mx-auto px-6 lg:px-8 font-montserrat flex flex-col gap-8">
     <div class="flex flex-col gap-2">
       <h1 class="text-2xl lg:text-3xl font-extrabold">
-        Resumes des nouvelles de la RDC en la Date du 16 Decembre 2024 a nos jours
+        Resumes des nouvelles de la RDC en la date du {{ formatDateTimeToFrench(formattedDate) }}
       </h1>
       <p class="text-sm italic max-w-3xl">Le resume es generé par une Intelligence Artificiel et peut contenir des
         erreurs,

@@ -27,3 +27,21 @@ export function sortByLongestTitle(data) {
         return lengthB - lengthA;
     });
 }
+
+export function formatDateTimeToFrench(dateString) {
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        throw new Error("Invalid date");
+    }
+
+    const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
+    const formattedDate = dateFormatter.format(date);
+
+    return `${formattedDate}`;
+}
