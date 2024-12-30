@@ -4,6 +4,7 @@ import { useNewsStore } from "@/stores/newsStore";
 import { computed, ref } from 'vue';
 import { extractTitleAndSummary } from '@/utils/funct';
 
+
 const LoadingSummaries = ref(false)
 
 const newsStore = useNewsStore();
