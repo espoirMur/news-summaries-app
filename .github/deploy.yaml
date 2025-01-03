@@ -11,6 +11,8 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v4
+      - name: Build
+        run: npm run build
       - name: Deploy
         id: deploy
         uses: cloudflare/wrangler-action@v3
