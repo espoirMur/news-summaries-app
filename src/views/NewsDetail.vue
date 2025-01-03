@@ -4,11 +4,11 @@ import { useNewsStore } from "@/stores/newsStore";
 import { computed, ref } from 'vue';
 import { extractTitleAndSummary } from '@/utils/funct';
 
+
 const LoadingSummaries = ref(false)
 
 const newsStore = useNewsStore();
 
-console.log(newsStore.news_detail)
 
 const formattedNewsDetail = computed(() => {
     if (!newsStore.news_detail) return null;
@@ -18,10 +18,12 @@ const formattedNewsDetail = computed(() => {
 
     return {
         ...detail,
-        title: title || detail.titles[0], // Fallback to the first title
+        title: title || detail.titles[0],
         summary,
     };
 });
+
+newsStore.loadNewsDetailFromStorage();
 
 </script>
 <template>

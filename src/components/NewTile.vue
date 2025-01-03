@@ -1,5 +1,6 @@
 <script setup>
 import { useNewsStore } from "@/stores/newsStore";
+import { watch } from "vue";
 import { RouterLink } from "vue-router";
 const { data, description, id, title } = defineProps({
     id: {
@@ -24,8 +25,17 @@ const { data, description, id, title } = defineProps({
 const newsStore = useNewsStore();
 
 const setDetailAndNavigate = () => {
-    newsStore.setNewsDetail(data);
+    newsStore.setNewsDetail({ ...data }); // Pass a shallow copy to avoid reactivity issues
 };
+
+watch(
+    () => newsStore.news_detail,
+    (newDetail) => {
+        console.log("news_detail changed:", newDetail);
+    },
+    { immediate: true }
+);
+
 </script>
 
 <template>

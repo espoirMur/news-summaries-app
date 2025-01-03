@@ -19,3 +19,29 @@ export function extractTitleAndSummary(summary) {
 
     return { title, summary: extractedSummary };
 }
+
+export function sortByLongestTitle(data) {
+    return data.sort((a, b) => {
+        const lengthA = a.titles[0].length;
+        const lengthB = b.titles[0].length;
+        return lengthB - lengthA;
+    });
+}
+
+export function formatDateTimeToFrench(dateString) {
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        throw new Error("Invalid date");
+    }
+
+    const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
+    const formattedDate = dateFormatter.format(date);
+
+    return `${formattedDate}`;
+}
