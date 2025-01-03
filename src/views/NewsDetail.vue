@@ -37,7 +37,7 @@ newsStore.loadNewsDetailFromStorage();
                     class="flex items-center flex-row text-sm px-6 py-2 rounded-md text-gray-200 bg-gray-700 hover:bg-gray-800">
                     Retour
                     en
-                    arrieure
+                    arrière
                 </RouterLink>
             </div>
             <div class="flex flex-col gap-4 lg:gap-6 col-span-1 ">
