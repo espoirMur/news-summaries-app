@@ -1,1 +1,2 @@
 main = "./src/main.js"
+pages_build_output_dir="dist"
