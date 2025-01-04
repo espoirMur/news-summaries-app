@@ -1,2 +1,1 @@
-name="balobi-nini"
-pages_build_output_dir="dist"
+main = "./src/main.js"

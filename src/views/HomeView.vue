@@ -68,7 +68,7 @@ const isDateDisabled = (date) => {
         Resumes des nouvelles de la RDC en la date du {{ formatDateTimeToFrench(formattedDate) }}
       </h1>
       <p class="text-sm italic max-w-3xl">
-      <span> Les résumés sont générés par une intelligence artificielle et peuvent contenir des erreurs. Veuillez prendre soin de lire les articles dans <b>En savoir plus ›</b> section de chaque categorie pour obtenir des informations correctes.</span>.
+      <span> Les résumés sont générés par une intelligence artificielle et peuvent contenir des erreurs. Veuillez prendre soin de lire les articles dans la scetion <b>En savoir plus </b> chaque categorie pour obtenir des informations correctes.</span>.
       </p>
     </div>
     <div class="flex justify-end">
