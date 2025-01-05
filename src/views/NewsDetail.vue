@@ -71,3 +71,4 @@ newsStore.loadNewsDetailFromStorage();
     </div>
   </main>
 </template>
+

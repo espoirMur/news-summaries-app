@@ -80,10 +80,7 @@ const handleDateChange = (event) => {
         {{ formatDateTimeToFrench(formattedDate) }}
       </h1>
       <p class="text-sm italic max-w-3xl">
-        Le résumé est généré par une Intelligence Artificielle et peut contenir
-        des erreurs. Référez-vous aux articles en détails pour des nouvelles
-        correctes. Cliquez sur
-        <span class="font-semibold">En savoir plus</span>.
+      <span> Les résumés sont générés par une intelligence artificielle et peuvent contenir des erreurs. Veuillez prendre soin de lire les articles dans la scetion <b>En savoir plus </b> chaque categorie pour obtenir des informations correctes.</span>.
       </p>
     </div>
     <div class="flex md:justify-end justify-normal">
