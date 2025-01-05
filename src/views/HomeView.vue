@@ -8,7 +8,6 @@ import {
   sortByLongestTitle,
 } from "@/utils/funct";
 import { useQuery } from "@tanstack/vue-query";
-import VueDatePicker from "@vuepic/vue-datepicker";
 import { ref, computed, watch } from "vue";
 import Oops from "../assets/oops.png";
 
@@ -45,8 +44,8 @@ const sortedArticles = computed(() => {
     const { title: extractedTitle, summary: extractedSummary } =
       extractTitleAndSummary(summary);
 
-    const title = extractedTitle || article.titles?.[0] || "Untitled"; // Handle fallback for missing titles
-    const updatedSummary = extractedSummary || summary; // Fallback to original summary if empty
+    const title = extractedTitle || article.titles?.[0] || "Untitled";
+    const updatedSummary = extractedSummary || summary;
 
     return {
       ...article,
@@ -58,8 +57,15 @@ const sortedArticles = computed(() => {
   return sortByLongestTitle(articlesWithTitles);
 });
 
-const isDateDisabled = (date) => {
-  return date < startDate || date > today;
+const handleDateChange = (event) => {
+  const date = new Date(event.target.value);
+  if (!isNaN(date.getTime())) {
+    selectedDate.value = date;
+    refetch();
+  } else {
+    console.error("Invalid date:", event.target.value);
+    event.target.value = formattedDate.value;
+  }
 };
 </script>
 
@@ -80,7 +86,7 @@ const isDateDisabled = (date) => {
         <span class="font-semibold">En savoir plus</span>.
       </p>
     </div>
-    <div class="flex justify-end">
+    <div class="flex md:justify-end justify-normal">
       <div>
         <label class="font-bold" for="date-picker"
           >Selectionner une date 📆</label
@@ -88,24 +94,12 @@ const isDateDisabled = (date) => {
         <input
           id="date-picker"
           :value="formattedDate"
-          @input="
-            (event) => (selectedDate.value = new Date(event.target.value))
-          "
+          @change="handleDateChange"
           type="date"
           :min="formatDateToInput(startDate)"
           :max="formatDateToInput(today)"
-          placeholder="Selectionner la date"
           class="input input-bordered w-full max-w-xs mt-2"
         />
-        <!-- <VueDatePicker
-          class="text-gray-500"
-          id="date-picker"
-          v-model="selectedDate"
-          :disabled-dates="isDateDisabled"
-          :default-date="today"
-          :highlighted-dates="[today]"
-          format="yyyy-MM-dd"
-        /> -->
       </div>
     </div>
 
