@@ -11,6 +11,7 @@ const toggleTheme = () => {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme); // Save preference
 };
+
 onMounted(() => {
   const savedTheme = localStorage.getItem("theme");
   let theme;
@@ -29,15 +30,18 @@ onMounted(() => {
 
 <template>
   <header class="w-full">
-    <div class="max-w-5xl mx-auto px-6 lg:px-8 flex justify-between py-6 items-center">
+    <div
+      class="max-w-5xl mx-auto px-6 lg:px-8 flex justify-between py-6 items-center"
+    >
       <h1 class="text-3xl font-extrabold">BN.</h1>
-      <div>
-        <label class="flex cursor-pointer gap-2 items-center">
-          <IconDark />
-          <input type="checkbox" class="toggle theme-controller" :checked="isDarkMode" @change="toggleTheme" />
-          <IconLight />
-        </label>
-      </div>
+      <button
+        @click="toggleTheme"
+        class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition"
+        aria-label="Toggle Theme"
+      >
+        <IconDark v-if="!isDarkMode" class="w-6 h-6" />
+        <IconLight v-else class="w-6 h-6" />
+      </button>
     </div>
   </header>
 </template>
