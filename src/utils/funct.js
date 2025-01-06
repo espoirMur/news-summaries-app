@@ -7,41 +7,52 @@
  */
 
 export function extractTitleAndSummary(summary) {
-    if (!summary) return { title: "", summary: "" };
+  if (!summary) return { title: "", summary: "" };
 
-    const titleMatch = summary.match(
-        /(?:Titre|title):\s*(.+?)\n(?:Résumé|Summary):/is
-    );
-    const title = titleMatch ? titleMatch[1].trim() : "";
+  const titleMatch = summary.match(
+    /(?:Titre|title):\s*(.+?)\n(?:Résumé|Summary):/is
+  );
+  const title = titleMatch ? titleMatch[1].trim() : "";
 
-    const summaryMatch = summary.match(/(?:Résumé|Summary):\s*(.+)/is);
-    const extractedSummary = summaryMatch ? summaryMatch[1].trim() : summary;
+  const summaryMatch = summary.match(/(?:Résumé|Summary):\s*(.+)/is);
+  const extractedSummary = summaryMatch ? summaryMatch[1].trim() : summary;
 
-    return { title, summary: extractedSummary };
+  return { title, summary: extractedSummary };
 }
 
 export function sortByLongestTitle(data) {
-    return data.sort((a, b) => {
-        const lengthA = a.titles[0].length;
-        const lengthB = b.titles[0].length;
-        return lengthB - lengthA;
-    });
+  return data.sort((a, b) => {
+    const lengthA = a.titles[0].length;
+    const lengthB = b.titles[0].length;
+    return lengthB - lengthA;
+  });
+}
+
+export function formatDateToInput(date) {
+  if (!date || !(date instanceof Date)) {
+    console.error("Invalid date passed to formatDateToInput:", date);
+    return "";
+  }
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 export function formatDateTimeToFrench(dateString) {
-    const date = new Date(dateString);
+  const date = new Date(dateString);
 
-    if (isNaN(date.getTime())) {
-        throw new Error("Invalid date");
-    }
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid date");
+  }
 
-    const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    });
+  const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-    const formattedDate = dateFormatter.format(date);
+  const formattedDate = dateFormatter.format(date);
 
-    return `${formattedDate}`;
+  return `${formattedDate}`;
 }
