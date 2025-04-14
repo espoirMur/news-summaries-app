@@ -6,24 +6,47 @@
  * @returns {{ title: string, summary: string }} An object containing the extracted title and summary.
  */
 
-export function extractTitleAndSummary(summary) {
+export function extractTitleAndSummaryFromText(summary) {
   if (!summary) return { title: "", summary: "" };
 
   const titleMatch = summary.match(
-    /(?:Titre|title):\s*(.+?)\n(?:Résumé|Summary):/is
+    /(?:Titre\s*|title\s*):\s*(.+?)\n(?:Résumé|Summary):/is
   );
   const title = titleMatch ? titleMatch[1].trim() : "";
 
-  const summaryMatch = summary.match(/(?:Résumé|Summary):\s*(.+)/is);
+  const summaryMatch = summary.match(/(?:Résumé\s*|Summary\s*):\s*(.+)/is);
   const extractedSummary = summaryMatch ? summaryMatch[1].trim() : summary;
 
   return { title, summary: extractedSummary };
 }
 
+export function extractTitleAndSummaryFromJsonString(jsonString) {
+  if (!jsonString) return { title: "", summary: "" };
+
+  const jsonData = JSON.parse(jsonString);
+  return jsonData;
+}
+/**
+ * extract title and summary from the text, the text is a json string.
+ * if the json extract fails then it will extract the title and summary from the text.
+ * @param {*} Text
+ */
+
+export function extractTitleAndSummary(Text) {
+  if (!Text) return { title: "", summary: "" };
+
+  try {
+    const jsonData = extractTitleAndSummaryFromJsonString(Text);
+    return jsonData;
+  } catch (error) {
+    console.error("Failed to parse JSON:", error);
+    return extractTitleAndSummaryFromText(Text);
+  }
+}
 export function sortByLongestTitle(data) {
   return data.sort((a, b) => {
-    const lengthA = a.titles[0].length;
-    const lengthB = b.titles[0].length;
+    const lengthA = a.titles.length;
+    const lengthB = b.titles.length;
     return lengthB - lengthA;
   });
 }
