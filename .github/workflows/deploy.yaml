@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Create .env file
+        run: |
+          echo "VITE_NEWS_URLS=${{ secrets.VITE_NEWS_URLS }}" > .env
       - name: Install dependencies
         run: npm ci
       - name: Build
