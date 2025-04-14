@@ -30,17 +30,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy
-      - name: Update Deployment Status
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const deploymentUrl = '${{ steps.deploy.outputs.url }}';
-            const deployment = await github.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: context.payload.deployment.id,
-              state: 'success',
-              environment_url: deploymentUrl,
-              description: 'Deployment completed successfully!'
-            });
-            console.log('Deployment status updated:', deployment);
+      
