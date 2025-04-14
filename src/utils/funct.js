@@ -43,7 +43,13 @@ export function extractTitleAndSummary(Text) {
     return extractTitleAndSummaryFromText(Text);
   }
 }
-export function sortByLongestTitle(data) {
+/**
+ * Sorts an array of objects by the number of items in their `titles` property in descending order.
+ *
+ * @param {Array<Object>} data - The array of objects to be sorted. Each object is expected to have a `titles` property, which is an array.
+ * @returns {Array<Object>} The sorted array, with objects having the largest `titles` arrays appearing first.
+ */
+export function sortByBiggestItems(data) {
   return data.sort((a, b) => {
     const lengthA = a.titles.length;
     const lengthB = b.titles.length;

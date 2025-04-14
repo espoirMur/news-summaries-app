@@ -1,5 +1,7 @@
 /** @format */
 
+import { NEWS_URLS } from "../constants";
+
 export const fetchOneNews = async (index = 0, news_summaries) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const singleNews = news_summaries[index];
@@ -7,9 +9,7 @@ export const fetchOneNews = async (index = 0, news_summaries) => {
 };
 
 export const getData = async (date = null) => {
-  const baseUrl =
-    "https://congo-news-summaries.s3.us-west-004.backblazeb2.com/summaries/";
-  const url = `${baseUrl}news-summaries-${date}.json`;
+  const url = `${NEWS_URLS}news-summaries-${date}.json`;
 
   try {
     const response = await fetch(url);

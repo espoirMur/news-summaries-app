@@ -5,7 +5,7 @@ import {
   extractTitleAndSummary,
   formatDateTimeToFrench,
   formatDateToInput,
-  sortByLongestTitle,
+  sortByBiggestItems,
 } from "@/utils/funct";
 import { useQuery } from "@tanstack/vue-query";
 import { ref, computed, watch } from "vue";
@@ -54,7 +54,7 @@ const sortedArticles = computed(() => {
     };
   });
 
-  return sortByLongestTitle(articlesWithTitles);
+  return sortByBiggestItems(articlesWithTitles);
 });
 
 const handleDateChange = (event) => {
