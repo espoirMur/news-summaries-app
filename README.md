@@ -1,10 +1,7 @@
 <!-- @format -->
-
-# .
-
 # News Summaries application
 
-This is the front end for the balobi nini application.
+This is the front end of the Balobi Nini application.
 
 ## Project Setup
 
